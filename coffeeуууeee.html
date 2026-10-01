@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOIR Coffee — Спешалти кофейня</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --chocolate: #2C1810;
+  --coffee: #5C3A21;
+  --caramel: #8B6F47;
+  --latte: #D4A574;
+  --cream: #F5EDE4;
+  --cream-dark: #E8DDD0;
+  --text: #2C1810;
+  --text2: #7A5C47;
+  --white: #FFFFFF;
+  --serif: 'Playfair Display', serif;
+  --sans: 'Inter', sans-serif;
+}
+
+[data-theme="dark"] {
+  --chocolate: #F5EDE4;
+  --coffee: #D4A574;
+  --caramel: #8B6F47;
+  --latte: #5C3A21;
+  --cream: #1A0F0A;
+  --cream-dark: #2C1810;
+  --text: #F5EDE4;
+  --text2: #A89080;
+  --white: #2C1810;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.4s, color 0.4s;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(245, 237, 228, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--cream-dark);
+}
+[data-theme="dark"] nav { background: rgba(26, 15, 10, 0.95); }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--chocolate);
+  letter-spacing: 0.05em;
+}
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--coffee);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  font-size: 1.2rem;
+}
+.logo-sub {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  color: var(--text2);
+  font-weight: 400;
+  display: block;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a:hover { color: var(--caramel); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--caramel);
+  transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
+
+.nav-actions { display: flex; align-items: center; gap: 1rem; }
+.theme-toggle {
+  background: var(--cream-dark);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-toggle:hover { background: var(--coffee); color: var(--cream); transform: rotate(180deg); }
+
+.nav-btn {
+  background: var(--coffee);
+  color: var(--cream);
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: var(--sans);
+  text-decoration: none;
+  border: none;
+}
+.nav-btn:hover { background: var(--chocolate); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(92, 58, 33, 0.3); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 8rem 2rem 4rem;
+}
+
+/* ИСПРАВЛЕНИЕ 1: CSS-страховка для видео */
+.hero-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  background-color: var(--chocolate);
+  background-image: url('img/hero.jpg'); /* Показывает фото, если видео не грузится */
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.hero-content { position: relative; }
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(92, 58, 33, 0.85);
+  color: var(--cream);
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+  backdrop-filter: blur(10px);
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+.hero-title em { 
+  font-style: italic; 
+  color: var(--latte);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.95);
+  max-width: 480px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  line-height: 1.6;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+
+.btn-primary {
+  background: var(--coffee);
+  color: var(--cream);
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover { background: var(--chocolate); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
+
+.btn-secondary {
+  background: transparent;
+  color: #FFFFFF;
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+.btn-secondary:hover { 
+  background: rgba(255, 255, 255, 0.15); 
+  border-color: #FFFFFF;
+  backdrop-filter: blur(10px);
+}
+
+.live-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem 1.8rem;
+  border-radius: 50px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: fadeUp 0.8s 1s forwards;
+}
+
+.counter-dot {
+  width: 10px;
+  height: 10px;
+  background: #4CAF50;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); }
+}
+.counter-text { font-size: 0.85rem; color: var(--text2); }
+.counter-number { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--chocolate); }
+
+.hero-visual {
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-blob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  background: var(--latte);
+  border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+  animation: blobMorph 8s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes blobMorph {
+  0%, 100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+  50% { border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%; }
+}
+
+.hero-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 30px 60px rgba(44, 24, 16, 0.3);
+}
+.hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.steam-container {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 150px;
+  z-index: 3;
+  pointer-events: none;
+}
+.steam {
+  position: absolute;
+  bottom: 0;
+  width: 8px;
+  height: 60px;
+  background: linear-gradient(to top, rgba(212, 165, 116, 0.6), transparent);
+  border-radius: 50%;
+  filter: blur(4px);
+  animation: steamRise 3s ease-in-out infinite;
+}
+.steam:nth-child(1) { left: 20px; animation-delay: 0s; }
+.steam:nth-child(2) { left: 45px; animation-delay: 1s; }
+.steam:nth-child(3) { left: 70px; animation-delay: 2s; }
+@keyframes steamRise {
+  0% { transform: translateY(0) scaleX(1); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-120px) scaleX(2); opacity: 0; }
+}
+
+.badge {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  background: var(--white);
+  padding: 1rem 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 4;
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.badge-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.badge-text { font-size: 0.75rem; font-weight: 600; color: var(--chocolate); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Остальные секции */
+section { padding: 3.5rem 2rem; }
+.section-header { max-width: 1100px; margin: 0 auto 2.5rem; }
+.section-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 0.5rem; }
+.section-header p { color: var(--text2); max-width: 600px; }
+
+.features { background: var(--cream); }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.feature { 
+  text-align: center; 
+  padding: 1.5rem 1rem; 
+  transition: transform 0.3s;
+  border: 1px solid rgba(139, 111, 71, 0.05);
+  border-radius: 16px;
+}
+.feature:hover { transform: translateY(-5px); }
+.feature-icon {
+  width: 70px;
+  height: 70px;
+  background: var(--latte);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-size: 1.8rem;
+  transition: all 0.3s;
+}
+.feature:hover .feature-icon { background: var(--coffee); transform: rotate(-10deg) scale(1.1); }
+.feature h3 { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.6rem; color: var(--chocolate); }
+.feature p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+
+.drinks { background: var(--coffee); position: relative; }
+.drinks::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--cream);
+  clip-path: ellipse(55% 100% at 50% 0%);
+}
+.drinks .section-header h2 { color: var(--cream); }
+.drinks .section-header p { color: var(--latte); }
+.drinks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.drink-card {
+  background: var(--cream);
+  border-radius: 18px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.4s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(139, 111, 71, 0.1);
+}
+.drink-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--caramel);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+.drink-card:hover::before { transform: scaleX(1); }
+.drink-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+
+.drink-img {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--cream-dark);
+  transition: transform 0.4s;
+}
+.drink-card:hover .drink-img { transform: scale(1.05) rotate(5deg); }
+.drink-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.drink-card h3 { font-family: var(--serif); font-size: 1.3rem; color: var(--chocolate); margin-bottom: 0.3rem; }
+.drink-card .desc { font-size: 0.85rem; color: var(--text2); margin-bottom: 0.8rem; }
+.drink-card .price { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--coffee); }
+
+.food { background: var(--cream); }
+.food .section-header h2 { color: var(--chocolate); }
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.food-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: 1px solid rgba(139, 111, 71, 0.08);
+}
+.food-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+.food-img { height: 180px; overflow: hidden; }
+.food-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.food-card:hover .food-img img { transform: scale(1.1); }
+.food-info { padding: 1.2rem; }
+.food-info h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--chocolate); margin-bottom: 0.3rem; }
+.food-info .desc { font-size: 0.8rem; color: var(--text2); margin-bottom: 0.8rem; line-height: 1.5; }
+.food-bottom { display: flex; justify-content: space-between; align-items: center; }
+.food-price { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--coffee); }
+.add-btn {
+  width: 32px;
+  height: 32px;
+  background: var(--latte);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-btn:hover { background: var(--coffee); transform: rotate(90deg); }
+
+.beans { background: var(--chocolate); color: var(--cream); position: relative; overflow: hidden; }
+.beans-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: center;
+}
+.beans-content h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 1rem; color: var(--cream); }
+.beans-content > p { color: var(--latte); margin-bottom: 2rem; max-width: 450px; }
+
+.bean-tabs { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.bean-tab {
+  background: rgba(255,255,255,0.1);
+  color: var(--cream);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: var(--sans);
+  transition: all 0.3s;
+}
+.bean-tab.active { background: var(--caramel); border-color: var(--caramel); }
+.bean-tab:hover { background: rgba(255,255,255,0.2); }
+
+.bean-details {
+  background: rgba(255,255,255,0.05);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border-left: 3px solid var(--caramel);
+}
+.bean-details h4 { font-family: var(--serif); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--caramel); }
+.bean-details p { font-size: 0.9rem; color: var(--latte); margin-bottom: 1rem; }
+.bean-meta { display: flex; gap: 1.5rem; font-size: 0.8rem; color: var(--cream); flex-wrap: wrap; }
+.bean-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+.beans-visual { position: relative; height: 400px; }
+.beans-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+.beans-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.roast-meter {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--cream);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  width: 80%;
+  color: var(--text);
+}
+.roast-label { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.5rem; color: var(--text2); }
+.roast-bar { height: 6px; background: var(--cream-dark); border-radius: 3px; overflow: hidden; position: relative; }
+.roast-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #D4A574 0%, #8B6F47 50%, #2C1810 100%);
+  border-radius: 3px;
+  width: 0;
+  transition: width 1.5s ease;
+}
+.roast-fill.animated { width: 75%; }
+
+.booking { background: var(--cream); }
+.booking-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+}
+.booking .section-header h2 { color: var(--chocolate); }
+.booking-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-size: 0.8rem; color: var(--text2); font-weight: 500; }
+.form-group input, .form-group select, .form-group textarea {
+  background: var(--cream);
+  border: 2px solid transparent;
+  color: var(--text);
+  padding: 0.9rem 1rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  border-radius: 10px;
+  transition: all 0.3s;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--coffee); background: var(--white); }
+.form-group textarea { resize: vertical; min-height: 80px; }
+
+.submit-btn {
+  grid-column: 1 / -1;
+  background: var(--coffee);
+  color: var(--cream);
+  border: none;
+  padding: 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s;
+  font-family: var(--sans);
+  margin-top: 0.5rem;
+}
+.submit-btn:hover { background: var(--chocolate); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(92, 58, 33, 0.3); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.submit-btn.success { background: #4CAF50; }
+.submit-btn.error { background: #f44336; }
+
+.contact { background: var(--latte); }
+.contact-grid { 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  max-width: 1100px; 
+  margin: 0 auto; 
+}
+.contact-info h2 { font-family: var(--serif); font-size: 2.2rem; color: var(--chocolate); margin-bottom: 1.5rem; }
+.contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+.contact-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.contact-item h4 { font-size: 0.85rem; color: var(--text2); margin-bottom: 0.2rem; font-weight: 500; }
+.contact-item p { color: var(--chocolate); font-weight: 500; }
+
+.subscribe { background: var(--white); padding: 1.5rem; border-radius: 16px; margin-top: 2rem; }
+.subscribe h4 { font-family: var(--serif); color: var(--chocolate); margin-bottom: 0.8rem; }
+.subscribe-form { display: flex; gap: 0.8rem; }
+.subscribe-form input {
+  flex: 1;
+  background: var(--cream);
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 20px;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  outline: none;
+}
+.subscribe-form button {
+  background: var(--coffee);
+  color: var(--cream);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-weight: 500;
+  transition: all 0.3s;
+}
+.subscribe-form button:hover { background: var(--chocolate); }
+
+footer { background: var(--chocolate); color: var(--cream); padding: 3rem 3rem 1.5rem; }
+.footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1100px; margin: 0 auto 2rem; }
+.footer-col h4 { font-family: var(--serif); margin-bottom: 1rem; color: var(--caramel); }
+.footer-col a { display: block; color: var(--latte); text-decoration: none; font-size: 0.85rem; margin-bottom: 0.6rem; transition: color 0.3s; }
+.footer-col a:hover { color: var(--cream); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--latte);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 2.5rem 1.5rem; }
+  .hero { padding: 6rem 1rem 3rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2rem; padding: 0 1rem; }
+  .hero-visual { height: 400px; order: -1; }
+  .hero-blob { width: 350px; height: 350px; }
+  .hero-image { width: 280px; height: 280px; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .drinks-grid { grid-template-columns: 1fr; }
+  .food-grid { grid-template-columns: repeat(2, 1fr); }
+  .beans-container { grid-template-columns: 1fr; }
+  .booking-form { grid-template-columns: 1fr; }
+  .footer-content { grid-template-columns: 1fr 1fr; }
+  .section-header { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .features-grid, .food-grid { grid-template-columns: 1fr; }
+  .footer-content { grid-template-columns: 1fr; }
+  .hero-cta { flex-direction: column; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon"></div>
+    <div>
+      NOIR Coffee
+      <span class="logo-sub">спешалти кофе</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#menu">Меню</a></li>
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#beans">Зёрна</a></li>
+    <li><a href="#booking">Бронирование</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" title="Сменить тему"></button>
+    <a href="#booking" class="nav-btn">Заказать столик</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-video-bg">
+    <!-- ИСПРАВЛЕНИЕ 2: Добавлены poster и preload="auto" для гарантированной загрузки -->
+    <video autoplay muted loop playsinline preload="auto" poster="img/hero.jpg" id="heroVideo">
+      <source src="img/hero-video.mp4" type="video/mp4">
+      Ваш браузер не поддерживает видео.
+    </video>
+  </div>
+  
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">☕ Specialty Coffee Since 2019</div>
+      <h1 class="hero-title">Кофе, в который <em>влюбляешься</em> с первого глотка</h1>
+      <p class="hero-sub">Спешалти кофе, свежая выпечка и уютная атмосфера в самом сердце города. Мы обжариваем зёрна сами — каждую неделю.</p>
+      <div class="hero-cta">
+        <a href="#menu" class="btn-primary">Смотреть меню →</a>
+        <a href="#beans" class="btn-secondary">Наши зёрна</a>
+      </div>
+      <div class="live-counter">
+        <div class="counter-dot"></div>
+        <div>
+          <div class="counter-text">Сегодня приготовлено</div>
+          <div class="counter-number" id="cupCounter">0 чашек</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="hero-blob"></div>
+      <div class="hero-image">
+        <img src="img/hero.jpg" alt="Чашка кофе" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/800px-A_small_cup_of_coffee.JPG'">
+      </div>
+      <div class="steam-container">
+        <div class="steam"></div>
+        <div class="steam"></div>
+        <div class="steam"></div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">🌿</div>
+        <div class="badge-text">100%<br>арабика</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="about">
+  <div class="features-grid">
+    <div class="feature fade-in">
+      <div class="feature-icon">🌱</div>
+      <h3>Отборные зёрна</h3>
+      <p>Работаем только с проверенными плантациями и спешалти лотами из Эфиопии и Колумбии.</p>
+    </div>
+    <div class="feature fade-in">
+      <div class="feature-icon">🔥</div>
+      <h3>Свежая обжарка</h3>
+      <p>Обжариваем небольшими партиями каждую неделю. Вы пьёте кофе максимум 7 дней после обжарки.</p>
+    </div>
+    <div class="feature fade-in">
+      <div class="feature-icon">👨‍🍳</div>
+      <h3>Опытные бариста</h3>
+      <p>Профессионалы, которые готовят с душой и вниманием. Чемпионы региональных соревнований.</p>
+    </div>
+    <div class="feature fade-in">
+      <div class="feature-icon">✨</div>
+      <h3>Уютное пространство</h3>
+      <p>Светло, спокойно и вкусно — ваше место силы в центре шумного города.</p>
+    </div>
+  </div>
+</section>
+
+<section class="drinks" id="menu">
+  <div class="section-header">
+    <div>
+      <h2>Популярные напитки</h2>
+      <p>Классика и авторские напитки на любой вкус. Все готовим на спешалти зерне.</p>
+    </div>
+  </div>
+  <div class="drinks-grid">
+    <div class="drink-card fade-in">
+      <div class="drink-img">
+        <img src="img/latte.jpg" alt="Latte" onerror="this.style.display='none'">
+      </div>
+      <h3>Латте</h3>
+      <p class="desc">Нежный и сливочный</p>
+      <div class="price">250 ₽</div>
+    </div>
+    <div class="drink-card fade-in">
+      <div class="drink-img">
+        <img src="img/cappuccino.jpg" alt="Cappuccino" onerror="this.style.display='none'">
+      </div>
+      <h3>Капучино</h3>
+      <p class="desc">Идеальный баланс</p>
+      <div class="price">280 ₽</div>
+    </div>
+    <div class="drink-card fade-in">
+      <div class="drink-img">
+        <img src="img/filter.jpg" alt="Filter" onerror="this.style.display='none'">
+      </div>
+      <h3>Фильтр-кофе</h3>
+      <p class="desc">Чистый вкус зерна</p>
+      <div class="price">260 ₽</div>
+    </div>
+  </div>
+</section>
+
+<section class="food">
+  <div class="section-header">
+    <div>
+      <h2>Рекомендуем попробовать</h2>
+      <p>Свежая выпечка от нашей пекарни. Идеально сочетается с любым кофе.</p>
+    </div>
+  </div>
+  <div class="food-grid">
+    <div class="food-card fade-in">
+      <div class="food-img">
+        <img src="img/croissant.jpg" alt="Croissant" onerror="this.style.display='none'">
+      </div>
+      <div class="food-info">
+        <h3>Круассан с миндалём</h3>
+        <p class="desc">Хрустящий снаружи, нежный внутри.</p>
+        <div class="food-bottom">
+          <div class="food-price">220 ₽</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="food-card fade-in">
+      <div class="food-img">
+        <img src="img/cheesecake.jpg" alt="Cheesecake" onerror="this.style.display='none'">
+      </div>
+      <div class="food-info">
+        <h3>Чизкейк с ягодами</h3>
+        <p class="desc">Нежный десерт с сезонными ягодами.</p>
+        <div class="food-bottom">
+          <div class="food-price">260 ₽</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="food-card fade-in">
+      <div class="food-img">
+        <img src="img/cookie.jpg" alt="Cookie" onerror="this.style.display='none'">
+      </div>
+      <div class="food-info">
+        <h3>Печенье с шоколадом</h3>
+        <p class="desc">Тёплое, мягкое и очень шоколадное.</p>
+        <div class="food-bottom">
+          <div class="food-price">160 ₽</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="food-card fade-in">
+      <div class="food-img">
+        <img src="img/cinnamon.jpg" alt="Cinnamon" onerror="this.style.display='none'">
+      </div>
+      <div class="food-info">
+        <h3>Синнамон ролл</h3>
+        <p class="desc">С корицей и сливочным кремом.</p>
+        <div class="food-bottom">
+          <div class="food-price">190 ₽</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="beans" id="beans">
+  <div class="beans-container">
+    <div class="beans-content fade-in">
+      <h2>Зёрна, которыми гордимся</h2>
+      <p>Путешествуем, выбираем лучшее, обжариваем с вниманием к деталям и раскрываем вкус в каждой чашке.</p>
+      <div class="bean-tabs">
+        <button class="bean-tab active" data-bean="ethiopia">Эфиопия</button>
+        <button class="bean-tab" data-bean="colombia">Колумбия</button>
+        <button class="bean-tab" data-bean="brazil">Бразилия</button>
+      </div>
+      <div class="bean-details" id="beanDetails">
+        <h4>Эфиопия Иргачефф</h4>
+        <p>Яркий цветочный аромат с нотами жасмина и бергамота. Лёгкое тело, чистое послевкусие.</p>
+        <div class="bean-meta">
+          <span>🌍 Эфиопия</span>
+          <span>📏 1800 м</span>
+          <span>🍋 Цитрус</span>
+          <span>⭐ 87 баллов</span>
+        </div>
+      </div>
+    </div>
+    <div class="beans-visual fade-in">
+      <div class="beans-image">
+        <img src="" alt="Кофейные зерна" id="beans-img">
+      </div>
+      <div class="roast-meter">
+        <div class="roast-label">
+          <span>Светлая</span>
+          <span>Степень обжарки</span>
+          <span>Тёмная</span>
+        </div>
+        <div class="roast-bar">
+          <div class="roast-fill" id="roastFill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="booking-container fade-in">
+    <div class="section-header" style="margin-bottom: 0;">
+      <div>
+        <h2>Ждём вас в гости!</h2>
+        <p>Забронируйте столик — мы подготовим всё к вашему приходу.</p>
+      </div>
+    </div>
+    <form class="booking-form" id="bookingForm">
+      <div class="form-group">
+        <label for="name">Ваше имя</label>
+        <input type="text" id="name" placeholder="Иван Иванов" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Телефон</label>
+        <input type="tel" id="phone" placeholder="+7 (999) 123-45-67" required>
+      </div>
+      <div class="form-group">
+        <label for="date">Дата</label>
+        <input type="date" id="date" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Время</label>
+        <select id="time" required>
+          <option value="">Выберите время</option>
+          <option value="09:00">09:00</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="12:00">12:00</option>
+          <option value="13:00">13:00</option>
+          <option value="14:00">14:00</option>
+          <option value="15:00">15:00</option>
+          <option value="16:00">16:00</option>
+          <option value="17:00">17:00</option>
+          <option value="18:00">18:00</option>
+          <option value="19:00">19:00</option>
+          <option value="20:00">20:00</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="guests">Количество гостей</label>
+        <select id="guests" required>
+          <option value="">Выберите</option>
+          <option value="1">1 человек</option>
+          <option value="2">2 человека</option>
+          <option value="3">3 человека</option>
+          <option value="4">4 человека</option>
+          <option value="5">5 человек</option>
+          <option value="6">6+ человек</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="comment">Комментарий</label>
+        <textarea id="comment" placeholder="Особые пожелания"></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Забронировать столик</button>
+    </form>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info fade-in">
+      <h2>Будьте в курсе новостей и спецпредложений</h2>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h4>Адрес</h4>
+          <p>ул. Большая Никитская, 12<br>Москва</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕒</div>
+        <div>
+          <h4>Часы работы</h4>
+          <p>Ежедневно 08:00 — 21:00</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h4>Телефон</h4>
+          <p>+7 (495) 123-45-67</p>
+        </div>
+      </div>
+      <div class="subscribe">
+        <h4>Подпишитесь на новости</h4>
+        <form class="subscribe-form" onsubmit="event.preventDefault(); alert('Спасибо за подписку!');">
+          <input type="email" placeholder="Ваш e-mail" required>
+          <button type="submit">Подписаться</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-col">
+      <div class="logo" style="color: var(--cream); margin-bottom: 1rem;">
+        <div class="logo-icon"></div>
+        <div>
+          NOIR Coffee
+          <span class="logo-sub" style="color: var(--latte);">спешалти кофе</span>
+        </div>
+      </div>
+      <p style="color: var(--latte); font-size: 0.85rem; max-width: 300px;">
+        Кофейня, где каждая чашка — это история. Мы верим, что хороший кофе делает день лучше.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Меню</h4>
+      <a href="#menu">Напитки</a>
+      <a href="#">Выпечка</a>
+      <a href="#beans">Зёрна</a>
+      <a href="#">Десерты</a>
+    </div>
+    <div class="footer-col">
+      <h4>Кофейня</h4>
+      <a href="#about">О нас</a>
+      <a href="#beans">Обжарка</a>
+      <a href="#booking">Бронирование</a>
+      <a href="#contact">Контакты</a>
+    </div>
+    <div class="footer-col">
+      <h4>Соцсети</h4>
+      <a href="#">Telegram</a>
+      <a href="#">Instagram</a>
+      <a href="#">VK</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 NOIR Coffee. Все права защищены. · Политика конфиденциальности · Условия использования
+  </div>
+</footer>
+
+<script>
+// Анимация появления при скролле
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// УМНЫЙ СЧЁТЧИК ЧАШЕК — зависит от времени работы
+function animateCounter() {
+  const counter = document.getElementById('cupCounter');
+  const maxCups = 247;
+  const openHour = 8;
+  const closeHour = 21;
+  
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+  const currentTime = currentHour + currentMinute / 60;
+  
+  let targetCups = 0;
+  
+  if (currentTime < openHour) {
+    targetCups = 0;
+  } else if (currentTime >= closeHour) {
+    targetCups = maxCups;
+  } else {
+    const workHours = closeHour - openHour;
+    const elapsed = currentTime - openHour;
+    const progress = elapsed / workHours;
+    targetCups = Math.floor(progress * maxCups);
+  }
+  
+  let current = 0;
+  const duration = 1500;
+  const steps = 60;
+  const increment = targetCups / steps;
+  const stepTime = duration / steps;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= targetCups) {
+      current = targetCups;
+      clearInterval(timer);
+    }
+    counter.textContent = Math.floor(current) + ' чашек';
+  }, stepTime);
+  
+  if (targetCups === 0 && currentTime < openHour) {
+    setTimeout(() => {
+      counter.parentElement.innerHTML = `
+        <div class="counter-text">Откроемся в 08:00</div>
+        <div class="counter-number" style="font-size: 1.2rem;">0 чашек</div>
+      `;
+    }, 1600);
+  }
+}
+
+setTimeout(animateCounter, 1500);
+
+// Переключатель темы
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', newTheme);
+});
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+}
+
+// Переключатель зёрен
+const beanData = {
+  ethiopia: { name: 'Эфиопия Иргачефф', desc: 'Яркий цветочный аромат с нотами жасмина и бергамота. Лёгкое тело, чистое послевкусие.', origin: '🌍 Эфиопия', altitude: '📏 1800 м', taste: '🍋 Цитрус', score: '⭐ 87 баллов', roast: 40 },
+  colombia: { name: 'Колумбия Супремо', desc: 'Сбалансированный вкус с нотами карамели, орехов и лёгкой кислинкой красных ягод.', origin: '🌍 Колумбия', altitude: '📏 1600 м', taste: '🍫 Карамель', score: '⭐ 85 баллов', roast: 65 },
+  brazil: { name: 'Бразилия Сантос', desc: 'Плотное тело, шоколадные ноты с оттенком жареного миндаля. Идеален для эспрессо.', origin: '🌍 Бразилия', altitude: '📏 1200 м', taste: '🌰 Орех', score: '⭐ 84 балла', roast: 80 }
+};
+
+document.querySelectorAll('.bean-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.bean-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const bean = beanData[tab.dataset.bean];
+    document.getElementById('beanDetails').innerHTML = `
+      <h4>${bean.name}</h4>
+      <p>${bean.desc}</p>
+      <div class="bean-meta">
+        <span>${bean.origin}</span>
+        <span>${bean.altitude}</span>
+        <span>${bean.taste}</span>
+        <span>${bean.score}</span>
+      </div>
+    `;
+    const roastFill = document.getElementById('roastFill');
+    roastFill.classList.remove('animated');
+    setTimeout(() => { roastFill.style.width = bean.roast + '%'; roastFill.classList.add('animated'); }, 100);
+  });
+});
+
+// Прогресс-бар обжарки
+const roastObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.getElementById('roastFill').classList.add('animated');
+      roastObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+roastObserver.observe(document.querySelector('.roast-meter'));
+
+// Умная загрузка фото зёрен
+const beansImg = document.getElementById('beans-img');
+if (beansImg) {
+  const variants = ['img/beans.jpg', 'img/beans.jpeg', 'img/Зерна.jpg', 'img/Зерна.jpeg'];
+  let currentIndex = 0;
+  function tryNext() {
+    if (currentIndex >= variants.length) {
+      beansImg.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/800px-Roasted_coffee_beans.jpg';
+      return;
+    }
+    const testImg = new Image();
+    testImg.onload = () => { beansImg.src = variants[currentIndex]; };
+    testImg.onerror = () => { currentIndex++; tryNext(); };
+    testImg.src = variants[currentIndex];
+  }
+  tryNext();
+}
+
+// ИСПРАВЛЕНИЕ 3: Гарантированный запуск видео с обработкой ошибок
+const heroVideo = document.getElementById('heroVideo');
+if (heroVideo) {
+  const playPromise = heroVideo.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(error => {
+      console.log('Автозапуск видео заблокирован браузером (это нормально для локальных файлов):', error);
+    });
+  }
+  
+  // Если видео не загрузилось (ошибка 404 или битый файл), скрываем его, чтобы показать красивую картинку на фоне
+  heroVideo.addEventListener('error', () => {
+    console.log('Ошибка загрузки видео. Показываем фоновое изображение (poster).');
+    heroVideo.style.display = 'none';
+  });
+}
+
+// Форма бронирования
+const form = document.getElementById('bookingForm');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    const originalText = btn.textContent;
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const guests = document.getElementById('guests').value;
+    const comment = document.getElementById('comment').value;
+    
+    btn.textContent = 'Отправка...';
+    btn.disabled = true;
+    
+    const chatId = '2110950091';
+    const text = `☕ Новая бронь NOIR Coffee!\n\n👤 Имя: ${name}\n📱 Телефон: ${phone}\n📅 Дата: ${date}\n⏰ Время: ${time}\n👥 Гостей: ${guests}\n💬 Комментарий: ${comment || 'нет'}`;
+    const workerUrl = `https://royal-cell-9890.nori39424.workers.dev?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
+    
+    fetch(workerUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.ok) {
+          btn.textContent = '✓ Заявка отправлена!';
+          btn.className = 'submit-btn success';
+          form.reset();
+        } else { throw new Error(data ? data.description : 'Unknown error'); }
+      })
+      .catch(error => {
+        console.error(error);
+        btn.textContent = '✗ Ошибка отправки';
+        btn.className = 'submit-btn error';
+      })
+      .finally(() => {
+        setTimeout(() => { btn.textContent = originalText; btn.className = 'submit-btn'; btn.disabled = false; }, 3000);
+      });
+  });
+}
+
+// Плавный скролл
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
